@@ -1,43 +1,71 @@
 ﻿<Page
-    x:Class="tempore.MainPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:tempore"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+   x:Class="tempore.MainPage"
+   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+   xmlns:local="using:tempore"
+   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+   mc:Ignorable="d">
 
-     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-         
         <StackPanel x:Name="Row1" VerticalAlignment="Top" Grid.Row="0">
-            <TextBox x:Name="TextBox1" PlaceholderText="Title" Text="" />
-            <TimePicker ></TimePicker>
-            <TextBox x:Name="TextBox2" PlaceholderText="Description" Text="" />
-            <Button x:Name="Button1" Content="Add task" Click="addTask"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="TextBox1" PlaceholderText="Title" Text=""
+                           Grid.Row="0"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="TextBoxHours" PlaceholderText="Hours"
+                                Text=""
+                                Grid.Column="0"/>
+                <TextBox x:Name="TextBoxMinutes" PlaceholderText="Minutes"
+                                Text=""
+                                Grid.Column="1"/>
+            </Grid>
+
+            <TextBox x:Name="TextBox2" PlaceholderText="Description"
+                           Text=""
+                           Grid.Row="2"
+                          Height="55"
+               HorizontalAlignment="Stretch"
+               AcceptsReturn="True"
+               TextWrapping="Wrap"
+                           ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+            <Button x:Name="Button1" Content="Add task"
+                          Grid.Row="3"
+                          HorizontalAlignment="Stretch" Click="addTask"/>
+        </Grid>
         </StackPanel>
-         
         <ScrollViewer Grid.Row="1">
-            <StackPanel x:Name="Row2" VerticalAlignment="Top">
+            <StackPanel x:Name="Row2" VerticalAlignment="Top" >
+                
                 <ListView ItemsSource="{x:Bind list}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local:Task">
                             <Grid>
-                                
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Text="{x:Bind title}"
-                                              Grid.Column="0"
-                                              Margin="12,6,0,0"/>
+                                                 Grid.Column="0"
+                                                 Margin="12,6,0,0"/>
                                 <TextBlock Text="{x:Bind description}"
-                                             Grid.Column="1"
-                                               Margin="12,6,0,6"/>
+                                                Grid.Column="1"
+                                                  Margin="12,6,0,6"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -45,8 +73,6 @@
 
             </StackPanel>
         </ScrollViewer>
-          
-       
-         
-     </Grid>
+
+    </Grid>
 </Page>
