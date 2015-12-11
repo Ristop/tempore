@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -22,24 +23,29 @@ namespace tempore
     /// </summary>
     public sealed partial class MainPage : Page
     {
-     private List<ListValues> list;
+     private ObservableCollection<Task> list;
         
     
         public MainPage()
         {
             this.InitializeComponent();
-               list = new List<ListValues>
+               list = new ObservableCollection<Task>
                {
-                    new ListValues {title = "Hi", description = "hello" },
-                    new ListValues {title = "test", description = "testing" },
+                    new Task {title = "Hi", description = "hello" },
+                    new Task {title = "test", description = "testing" },
                };
         }
-          
+
+        public void addTask(Object sender, RoutedEventArgs e)
+        {
+            list.Add(new Task { title = "Hi", description = "hello" });
+        }
+
     }
 
-     public class ListValues
+    public class Task
      {
-          public string title;
-          public string description;
+        public string title;
+        public string description;
      }
 }
