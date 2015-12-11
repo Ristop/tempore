@@ -16,35 +16,94 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using System.Collections.ObjectModel;
 
 namespace tempore
 {
      public sealed partial class MasterDetailPage : Page
      {
           private ItemViewModel _lastSelectedItem;
+          private ObservableCollection<ItemViewModel> list;
+          DispatcherTimer dispatcherTimer;
+          Task currentlyRunningTask;
+          Boolean aTaskIsRunning = false;
+          TextBlock currentTextBlock;
 
           public MasterDetailPage()
           {
                this.InitializeComponent();
           }
 
-          protected override void OnNavigatedTo(NavigationEventArgs e)
+          public void addTask(Object sender, RoutedEventArgs e)
+          {
+               list.Add(ItemViewModel.FromItem(new Item()
+               {
+                    Title = TextBoxTitle.Text,
+                    Id = 13,
+                    Text = TextBoxText.Text,
+
+               }));
+          }
+
+          private void timer(object sender, RoutedEventArgs e)
+          {
+               if (!aTaskIsRunning)
+               {
+                    currentlyRunningTask = new Task("a", "b", 50); //tasks[...];
+                                                                   // currentTextBlock = textBlocks[...];
+                    DispatcherTimerSetup();
+               }
+               else {
+                    stopTimer();
+               }
+          }
+
+          private void DispatcherTimerSetup()
+          {
+               dispatcherTimer = new DispatcherTimer();
+               dispatcherTimer.Tick += dispatcherTimer_Tick;
+               dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+               dispatcherTimer.Start();
+          }
+
+          private void dispatcherTimer_Tick(object sender, object e)
+          {
+               if (currentlyRunningTask.getTimesToTick() == 0)
+               {
+                    dispatcherTimer.Stop();
+                    stopTimer();
+                    currentTextBlock.Text = "Finished";
+               }
+               currentlyRunningTask.setTimesToTick(currentlyRunningTask.getTimesToTick() - 1);
+               currentTextBlock.Text = currentlyRunningTask.getTimesToTick().ToString();
+          }
+
+          private void stopTimer()
+          {
+               currentTextBlock.Text = "Paused";
+               aTaskIsRunning = false;
+               dispatcherTimer.Stop();
+          }
+
+
+
+
+     protected override void OnNavigatedTo(NavigationEventArgs e)
           {
                base.OnNavigatedTo(e);
 
-               var items = MasterListView.ItemsSource as List<ItemViewModel>;
+               //var items = MasterListView.ItemsSource as List<ItemViewModel>;
 
-               if (items == null)
+               if (list == null)
                {
-                    items = new List<ItemViewModel>();
+                    list = new ObservableCollection<ItemViewModel>();
 
                     foreach (var item in ItemsDataSource.GetAllItems())
                     {
-                         items.Add(ItemViewModel.FromItem(item));
+                         list.Add(ItemViewModel.FromItem(item));
                     }
 
-
-                    MasterListView.ItemsSource = items;
+                  
                }
 
                if (e.Parameter != null)
@@ -52,7 +111,7 @@ namespace tempore
                     // Parameter is item ID
                     var id = (int)e.Parameter;
                     _lastSelectedItem =
-                        items.Where((item) => item.ItemId == id).FirstOrDefault();
+                        list.Where((item) => item.ItemId == id).FirstOrDefault();
                }
 
                UpdateForVisualState(AdaptiveStates.CurrentState);
@@ -121,4 +180,36 @@ namespace tempore
                }
           }
      }
+}
+
+public class Task
+{
+     public String title;
+     public String description;
+     private int timesToTick;
+     private int totalTime;
+
+     public Task(String title, String description, int totalTime)
+     {
+          this.title = title;
+          this.description = description;
+          this.timesToTick = totalTime;
+          this.totalTime = totalTime;
+     }
+
+     public int getTimesToTick()
+     {
+          return this.timesToTick;
+     }
+
+     public int getTotalTime()
+     {
+          return this.totalTime;
+     }
+
+     public void setTimesToTick(int x)
+     {
+          this.timesToTick = x;
+     }
+
 }
