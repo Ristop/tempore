@@ -7,7 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    </Grid>
+     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+          <StackPanel x:Name="Row1" Height="54" VerticalAlignment="Top">
+               <TextBox x:Name="TextBox1" Text="" />
+               <Button x:Name="Button1" Content="Add task" Click="RefreshPage"/>
+          </StackPanel>
+     </Grid>
 </Page>
