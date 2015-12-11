@@ -11,7 +11,19 @@
           
           <StackPanel x:Name="Row1" VerticalAlignment="Top">
                <TextBox x:Name="TextBox1" PlaceholderText="Title" Text="" />
-               <TimePicker ></TimePicker>
+               <Grid>
+                    <Grid.ColumnDefinitions>
+                         <ColumnDefinition Width="*"/>
+                         <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="TextBoxHours" PlaceholderText="Hours" 
+                             Text=""
+                             Grid.Column="0"/>
+                    <TextBox x:Name="TextBoxMinutes" PlaceholderText="Minutes" 
+                             Text=""
+                             Grid.Column="1"/>
+               </Grid>
+                   
                <TextBox x:Name="TextBox2" PlaceholderText="Description" Text="" />
                <Button x:Name="Button1" Content="Add task"/>
                <ListView ItemsSource="{x:Bind list}">
