@@ -8,9 +8,20 @@
     mc:Ignorable="d">
 
      <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-          <StackPanel x:Name="Row1" Height="54" VerticalAlignment="Top">
+          
+          <StackPanel x:Name="Row1" VerticalAlignment="Top">
                <TextBox x:Name="TextBox1" Text="" />
-               <Button x:Name="Button1" Content="Add task" Click="RefreshPage"/>
+               <Button x:Name="Button1" Content="Add task"/>
+               <ListView ItemsSource="{ x:Bind list}">
+                    <ListView.ItemTemplate>
+                         <DataTemplate x:DataType="local:ListValues">
+                              <TextBlock Text="{x:Bind title}"></TextBlock>
+                         </DataTemplate>
+                    </ListView.ItemTemplate>
+               </ListView>
+
           </StackPanel>
+          
+         
      </Grid>
 </Page>

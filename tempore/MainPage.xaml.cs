@@ -22,11 +22,24 @@ namespace tempore
     /// </summary>
     public sealed partial class MainPage : Page
     {
-     
+     private List<ListValues> list;
+        
+    
         public MainPage()
         {
             this.InitializeComponent();
+               list = new List<ListValues>
+               {
+                    new ListValues {title = "Hi", description = "hello" },
+                    new ListValues {title = "test", description = "testing" },
+               };
         }
           
     }
+
+     public class ListValues
+     {
+          public string title;
+          public string description;
+     }
 }
