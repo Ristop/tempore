@@ -8,34 +8,45 @@
     mc:Ignorable="d">
 
      <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-          
-          <StackPanel x:Name="Row1" VerticalAlignment="Top">
-               <TextBox x:Name="TextBox1" PlaceholderText="Title" Text="" />
-               <TimePicker ></TimePicker>
-               <TextBox x:Name="TextBox2" PlaceholderText="Description" Text="" />
-               <Button x:Name="Button1" Content="Add task"/>
-               <ListView ItemsSource="{x:Bind list}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+         
+        <StackPanel x:Name="Row1" VerticalAlignment="Top" Grid.Row="0">
+            <TextBox x:Name="TextBox1" PlaceholderText="Title" Text="" />
+            <TimePicker ></TimePicker>
+            <TextBox x:Name="TextBox2" PlaceholderText="Description" Text="" />
+            <Button x:Name="Button1" Content="Add task" Click="addTask"/>
+        </StackPanel>
+         
+        <ScrollViewer Grid.Row="1">
+            <StackPanel x:Name="Row2" VerticalAlignment="Top">
+                <ListView ItemsSource="{x:Bind list}">
                     <ListView.ItemTemplate>
-                         <DataTemplate x:DataType="local:ListValues">
-                              <Grid>
-                                   <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                   </Grid.ColumnDefinitions>
-                                   
-                                   <TextBlock Text="{x:Bind title}"
+                        <DataTemplate x:DataType="local:Task">
+                            <Grid>
+                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="{x:Bind title}"
                                               Grid.Column="0"
                                               Margin="12,6,0,0"/>
-                                   <TextBlock Text="{x:Bind description}"
+                                <TextBlock Text="{x:Bind description}"
                                              Grid.Column="1"
                                                Margin="12,6,0,6"/>
-                              </Grid>
-                         </DataTemplate>
+                            </Grid>
+                        </DataTemplate>
                     </ListView.ItemTemplate>
-               </ListView>
+                </ListView>
 
-          </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
           
+       
          
      </Grid>
 </Page>
